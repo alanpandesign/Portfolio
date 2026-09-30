@@ -8,7 +8,10 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ONLINE = !!window.ONLINE; // 線上版：只附預覽片段、不嵌入 YouTube
   const WEB = { sportsnote: "hero", anim: "web" }; // 線上版有 720p 完整版的影片
-  const FULL = s => ONLINE ? (WEB[s] ? `${V(s)}-${WEB[s]}.mp4` : `${V(s)}-preview.mp4`) : `${V(s)}.mp4`;
+  // 手機或省流量模式：點開播放 720p 手機版（檔案約 1/3，點了馬上能看）
+  const MOBILE = matchMedia("(max-width: 900px), (pointer: coarse)").matches || !!(navigator.connection && navigator.connection.saveData);
+  const HAS_M = new Set(["sportsnote", "on-event", "breaker", "breaker-short", "lin-doc", "vface", "cactus", "day0", "tsmc", "fx-guide", "anim", "oasis"]);
+  const FULL = s => ONLINE ? (WEB[s] ? `${V(s)}-${WEB[s]}.mp4` : `${V(s)}-preview.mp4`) : `${V(s)}${MOBILE && HAS_M.has(s) ? "-m" : ""}.mp4`;
   const DUR = { anim: "1:34", tsmc: "1:05", "fx-guide": "0:30", sportsnote: "1:17", "on-event": "0:43", breaker: "1:14", "breaker-short": "0:52", "lin-doc": "1:37", vface: "0:43", cactus: "0:30", oasis: "13:28", day0: "0:52" };
   const tcFrom = (sec, fps = 24) => `${pad(Math.floor(sec / 3600))}:${pad(Math.floor(sec / 60) % 60)}:${pad(Math.floor(sec) % 60)}:${pad(Math.floor((sec % 1) * fps))}`;
 
@@ -193,7 +196,7 @@
   /* ---------- 自動播放（進入畫面才載入、離開暫停） ---------- */
   // 提前下載：影片離畫面還有約 1.5 個螢幕高時就先載入
   const load = v => { if (!v.getAttribute("src")) { v.preload = "auto"; v.src = v.dataset.src; v.load(); } };
-  const pio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { load(e.target); pio.unobserve(e.target); } }), { rootMargin: "1200px 0px 1200px 0px" });
+  const pio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { load(e.target); pio.unobserve(e.target); } }), { rootMargin: "500px 0px 500px 0px" });
   // 進入畫面就播放，離開就暫停
   const io = new IntersectionObserver(es => es.forEach(e => {
     const v = e.target;
@@ -223,16 +226,44 @@
   function show(i) {
     cur = (i + list.length) % list.length;
     const el = list[cur], src = el.dataset.src;
-    stage.innerHTML = el.dataset.lb === "video" ? `<video src="${src}" controls autoplay playsinline></video>` : `<img src="${src}" alt="">`;
+    stage.innerHTML = "";
+    if (el.dataset.lb === "video") {
+      // 在點擊當下直接呼叫 play()，手機才允許有聲播放；先顯示封面圖與讀取中
+      const v = document.createElement("video");
+      v.controls = true; v.playsInline = true; v.preload = "auto";
+      v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
+      v.poster = src.replace(/(-m|-hero|-web|-preview)?\.mp4$/, "-poster.jpg");
+      v.src = src;
+      const spin = document.createElement("div"); spin.className = "lb-load"; spin.innerHTML = "<i></i><span>影片載入中…</span>";
+      const snd = document.createElement("button"); snd.className = "lb-snd"; snd.textContent = "🔊 開啟聲音"; snd.hidden = true;
+      snd.onclick = () => { v.muted = false; v.play().catch(() => {}); snd.hidden = true; };
+      v.addEventListener("playing", () => spin.remove(), { once: true });
+      v.addEventListener("error", () => { spin.querySelector("span").textContent = "影片載入失敗，請稍後再試"; });
+      stage.append(v, spin, snd);
+      const p = v.play();
+      if (p) p.catch(() => { v.muted = true; v.play().then(() => { snd.hidden = false; }).catch(() => { spin.remove(); }); });
+    } else stage.innerHTML = `<img src="${src}" alt="">`;
     $("#lbTitle").textContent = el.dataset.title || "";
     $("#lbCount").textContent = `${pad(cur + 1)} / ${pad(list.length)}`;
   }
+  // 開燈箱時：停掉並釋放頁面上所有影片的下載，讓頻寬全部給完整版
+  let freed = [];
+  function freeAll() {
+    freed = [];
+    $$("video.auto").forEach(v => { v.pause(); if (v.getAttribute("src")) { v.removeAttribute("src"); v.load(); freed.push(v); } });
+    hv.pause(); hv.dataset.src = hv.dataset.src || hv.getAttribute("src"); hv.removeAttribute("src"); hv.load();
+  }
+  function restoreAll() {
+    hv.src = hv.dataset.src; hv.load(); hv.play().catch(() => {});
+    freed.forEach(v => { if (inView(v)) { v.src = v.dataset.src; v.play().catch(() => {}); } }); freed = [];
+  }
   function open(el) {
+    freeAll();
     list = $$("main [data-lb]"); let i = list.indexOf(el);
     if (i < 0) { list = [el]; i = 0; }
     show(i); lb.classList.add("open"); document.body.style.overflow = "hidden"; hv.pause();
   }
-  function close() { lb.classList.remove("open"); stage.innerHTML = ""; document.body.style.overflow = ""; hv.play().catch(() => {}); }
+  function close() { const v = stage.querySelector("video"); if (v) { v.pause(); v.removeAttribute("src"); v.load(); } lb.classList.remove("open"); stage.innerHTML = ""; document.body.style.overflow = ""; restoreAll(); }
   document.addEventListener("click", e => {
     const el = e.target.closest("[data-lb]");
     if (!el) return;

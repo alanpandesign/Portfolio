@@ -15,17 +15,23 @@
 </head>
 <body class="loading">
 
-<!-- 開場載入：0 → 100%（依封面影片實際載入進度） -->
-<div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-top"><span>● REC</span><span>ALAN PAN — PORTFOLIO</span><span>4K · 24FPS</span></div>
+<!-- 開場載入：Alan 影音作品集＋座右銘，0 → 100%（依封面影片實際載入進度） -->
+<div class="loader v2" id="loader" aria-hidden="true">
+  <div class="ld-half top"></div><div class="ld-half bot"></div>
+  <div class="ld-glow"><span class="leak l1"></span><span class="leak l2"></span></div>
+  <div class="ld-film left"></div><div class="ld-film right"></div>
+  <div class="ld-frame"><i></i><i></i><i></i><i></i></div>
+  <div class="ld-hud top"><span class="rec">● REC</span><span class="mid">ALAN PAN — PORTFOLIO</span><span id="loaderTc">00:00:00:00</span></div>
   <div class="ld-center">
     <div class="ld-eyebrow">Video Portfolio · 2023 — 2026</div>
     <h1 class="ld-title"><span class="ld-en">Alan</span><span class="ld-zh">影音作品集</span></h1>
-    <div class="ld-count"><b id="ldNum">0</b><i>%</i></div>
-    <div class="loader-bar"><b id="loaderBar"></b></div>
-    <div class="ld-tc" id="loaderTc">00:00:00:00</div>
+    <blockquote class="ld-quote">
+      <p id="ldQuote" data-text="「以影為筆，以剪為刀，賦予影像第二次生命。」"><span class="caret"></span></p>
+      <cite>── Video Editor &amp; Visual Planner</cite>
+    </blockquote>
   </div>
-  <div class="loader-bottom"><span>ISO 800</span><span>1/50</span><span>F2.8</span><span>5600K</span></div>
+  <div class="ld-hud bot"><span>ISO 800 · 1/50 · F2.8 · 5600K</span><span class="ld-count"><b id="ldNum">000</b><i>%</i></span></div>
+  <div class="ld-line"><b id="loaderBar"></b></div>
 </div>
 
 <div class="progress"><b id="progress"></b></div>

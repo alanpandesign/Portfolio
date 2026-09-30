@@ -161,7 +161,18 @@
     const imgs = [hv.poster, "assets/img/portrait.jpg"];
     let loadedImgs = 0; imgs.forEach(src => { const im = new Image(); im.onload = im.onerror = () => { loadedImgs++; imgsOK = loadedImgs / imgs.length; }; im.src = src; });
     const vidProg = () => { try { const b = hv.buffered; return b.length ? Math.min(1, b.end(b.length - 1) / 5) : 0; } catch (e) { return 0; } };
-    const MIN = seen ? 700 : 1500, MAX = 5000;
+    const MIN = seen ? 900 : 3000, MAX = 6000;
+    // 標題逐字飛入，完成後 Alan 加上流光
+    let ci = 0;
+    $$(".ld-title > span").forEach(sp => { sp.innerHTML = [...sp.textContent].map(ch => `<span class="ch" style="--i:${ci++}">${ch}</span>`).join(""); });
+    setTimeout(() => { const en = $(".ld-en"); if (en) { en.textContent = en.textContent; en.classList.add("shine"); } }, 250 + ci * 70 + 900);
+    // 座右銘逐字打出
+    const q = $("#ldQuote"), qt = q ? q.dataset.text : "", caret = q && q.querySelector(".caret");
+    if (q) {
+      const done = () => q.parentElement.classList.add("typed");
+      if (seen || reduce) { q.insertBefore(document.createTextNode(qt), caret); done(); }
+      else { let i = 0; setTimeout(function type() { q.insertBefore(document.createTextNode(qt[i++]), caret); if (i < qt.length) setTimeout(type, 70); else done(); }, 850); }
+    }
     (function tick(now) {
       const el = now - t0;
       const real = fontsOK * .15 + imgsOK * .15 + (hv.readyState >= 3 ? 1 : vidProg()) * .7;
@@ -171,11 +182,11 @@
       if (el > MAX) target = 1;
       shown += (target - shown) * .12; if (target === 1 && shown > .995) shown = 1;
       const pct = Math.round(shown * 100);
-      $("#ldNum").textContent = pct;
+      $("#ldNum").textContent = String(pct).padStart(3, "0");
       $("#loaderBar").style.width = pct + "%";
       $("#loaderTc").textContent = tcFrom(el / 1000);
       if (shown < 1) return requestAnimationFrame(tick);
-      setTimeout(finish, 250);
+      setTimeout(finish, seen ? 200 : 450);
     })(t0);
   }
 

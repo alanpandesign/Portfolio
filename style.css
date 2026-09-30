@@ -397,3 +397,71 @@ footer a:hover{color:var(--gold)}
   #hudTc,#hudCh{display:none}
   .hud-views{padding-left:10px}
 }
+
+/* ---------- 開場載入 v3：觀景窗＋座右銘＋幕布開場 ---------- */
+.loader.v2{background:transparent;clip-path:none;display:block;color:#fff;transition:visibility 0s 1.3s}
+.loader.v2.done{visibility:hidden;pointer-events:none}
+.ld-half{position:absolute;left:0;right:0;height:50.5%;background:#070707;transition:transform 1.15s cubic-bezier(.77,0,.18,1) .15s}
+.ld-half.top{top:0}.ld-half.bot{bottom:0}
+.loader.done .ld-half.top{transform:translateY(-101%)}.loader.done .ld-half.bot{transform:translateY(101%)}
+.ld-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 55% at 50% 48%,rgba(245,194,27,.09),transparent 70%),radial-gradient(40% 60% at 0% 100%,rgba(214,98,24,.12),transparent 70%);
+  opacity:0;animation:ldIn 1.6s .1s forwards}
+.ld-glow::after{content:"";position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.loader.done .ld-glow,.loader.done .ld-frame,.loader.done .ld-hud,.loader.done .ld-line{opacity:0!important;transition:opacity .35s}
+.ld-frame i{position:absolute;width:34px;height:34px;border:1.5px solid var(--gold);opacity:0;animation:ldCorner .9s var(--ease) forwards}
+.ld-frame i:nth-child(1){top:22px;left:22px;border-right:0;border-bottom:0}
+.ld-frame i:nth-child(2){top:22px;right:22px;border-left:0;border-bottom:0}
+.ld-frame i:nth-child(3){bottom:22px;left:22px;border-right:0;border-top:0}
+.ld-frame i:nth-child(4){bottom:22px;right:22px;border-left:0;border-top:0}
+@keyframes ldCorner{from{opacity:0;transform:scale(1.6)}to{opacity:.9;transform:none}}
+.ld-hud{position:absolute;left:72px;right:72px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:rgba(255,255,255,.75);opacity:0;animation:ldIn .8s .3s forwards}
+.ld-hud.top{top:30px}.ld-hud.bot{bottom:34px;align-items:flex-end}
+.ld-hud .rec{color:#e33;animation:blink 1s infinite}
+.ld-hud #loaderTc{color:var(--gold);font-variant-numeric:tabular-nums}
+.ld-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:0 24px}
+.loader.done .ld-center{transform:scale(1.04);opacity:0;transition:transform .8s var(--ease),opacity .45s}
+.ld-quote{margin:14px 0 0;padding:4px 0 4px 18px;border-left:1.5px solid var(--gold);text-align:left;max-width:min(560px,86vw);opacity:0;animation:ldIn .8s .75s forwards}
+.ld-quote p{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(15px,1.7vw,21px);letter-spacing:.08em;color:#fff;line-height:1.7;min-height:1.7em}
+.ld-quote .caret{display:inline-block;width:2px;height:1.05em;background:var(--gold);vertical-align:-.15em;margin-left:3px;animation:blink .8s steps(1) infinite}
+.ld-quote cite{display:block;margin-top:6px;font-family:var(--display);font-style:italic;font-weight:400;font-variation-settings:"SOFT" 100,"WONK" 1;font-size:clamp(13px,1.2vw,16px);color:var(--gold);letter-spacing:.04em;opacity:0;transition:opacity .8s}
+.ld-quote.typed cite{opacity:.9}
+.ld-hud .ld-count{display:flex;align-items:flex-start;opacity:1;animation:none;margin:0;font-family:var(--display);font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144;color:var(--gold);letter-spacing:0;line-height:.8}
+.ld-hud .ld-count b{font-size:clamp(44px,6vw,84px);font-weight:300;font-variant-numeric:tabular-nums;min-width:0;text-align:right}
+.ld-hud .ld-count i{font-style:normal;font-size:clamp(14px,1.6vw,20px);margin:.2em 0 0 4px}
+.ld-line{position:absolute;left:0;right:0;bottom:0;height:2px;background:rgba(255,255,255,.08)}
+.ld-line b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold-dim),var(--gold));box-shadow:0 0 12px rgba(245,194,27,.6)}
+@media (max-width:720px){
+  .ld-hud{left:26px;right:26px;font-size:9.5px;letter-spacing:.16em}
+  .ld-hud .mid,.ld-hud.bot>span:first-child{display:none}
+  .ld-hud.top{top:30px}.ld-hud.bot{bottom:30px;justify-content:flex-end}
+  .ld-frame i{width:24px;height:24px}
+  .ld-frame i:nth-child(1),.ld-frame i:nth-child(2){top:16px}.ld-frame i:nth-child(3),.ld-frame i:nth-child(4){bottom:16px}
+  .ld-frame i:nth-child(1),.ld-frame i:nth-child(3){left:14px}.ld-frame i:nth-child(2),.ld-frame i:nth-child(4){right:14px}
+  .ld-quote{padding-left:14px}
+}
+
+/* ---------- 開場動態效果 ---------- */
+.ld-title .ch{display:inline-block;opacity:0;transform:translateY(55%) scale(.96);filter:blur(10px);animation:chIn .95s var(--ease) forwards;animation-delay:calc(.25s + var(--i) * 70ms)}
+.ld-title .ld-en,.ld-title .ld-zh{opacity:1!important;transform:none!important;animation:none!important}
+@keyframes chIn{to{opacity:1;transform:none;filter:blur(0)}}
+.ld-en.shine{background:linear-gradient(110deg,var(--gold) 0 38%,#fff3c4 48%,#ffffff 50%,#fff3c4 52%,var(--gold) 62% 100%);background-size:280% 100%;-webkit-background-clip:text;background-clip:text;animation:shine 2.6s ease-in-out infinite!important}
+.ld-en.shine .ch{color:transparent}
+@keyframes shine{0%{background-position:120% 0}60%,100%{background-position:-60% 0}}
+.leak{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;mix-blend-mode:screen}
+.leak.l1{width:46vw;height:46vw;left:-18vw;top:30%;background:radial-gradient(circle,rgba(214,98,24,.35),transparent 65%);animation:leak1 7s ease-in-out infinite alternate}
+.leak.l2{width:34vw;height:34vw;right:-12vw;top:-10%;background:radial-gradient(circle,rgba(245,194,27,.18),transparent 65%);animation:leak2 9s ease-in-out infinite alternate}
+@keyframes leak1{to{transform:translate(30vw,-18vh) scale(1.2)}}
+@keyframes leak2{to{transform:translate(-24vw,36vh) scale(.9)}}
+.ld-film{position:absolute;top:0;bottom:0;width:22px;opacity:0;animation:ldIn 1s .2s forwards;
+  background:linear-gradient(90deg,transparent 0 5px,rgba(255,255,255,.05) 5px 17px,transparent 17px),
+    repeating-linear-gradient(180deg,transparent 0 7px,rgba(255,255,255,.22) 7px 17px,transparent 17px 26px);
+  background-size:100% 100%,12px 26px;background-repeat:no-repeat,repeat-y;background-position:0 0,5px 0}
+.ld-film.left{left:0;animation:ldIn 1s .2s forwards,film 1.1s linear infinite}
+.ld-film.right{right:0;animation:ldIn 1s .2s forwards,filmUp 1.1s linear infinite}
+@keyframes film{to{background-position:0 0,5px 26px}}
+@keyframes filmUp{to{background-position:0 0,5px -26px}}
+.ld-frame i{animation:ldCorner .9s var(--ease) forwards,pulse 2.4s 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.9;transform:none}50%{opacity:.45;transform:scale(1.12)}}
+.loader.done .ld-film{opacity:0!important;transition:opacity .3s}
+@media (max-width:720px){.ld-film{width:14px;background-size:100% 100%,8px 20px;background-position:0 0,3px 0}.ld-quote p{font-size:14px;letter-spacing:.04em}}
+@media (prefers-reduced-motion:reduce){.ld-title .ch{opacity:1;transform:none;filter:none}}

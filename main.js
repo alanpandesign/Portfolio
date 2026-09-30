@@ -8,10 +8,10 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ONLINE = !!window.ONLINE; // 線上版：只附預覽片段、不嵌入 YouTube
   const WEB = { sportsnote: "hero", anim: "web" }; // 線上版有 720p 完整版的影片
-  // 手機或省流量模式：點開播放 720p 手機版（檔案約 1/3，點了馬上能看）
+  // 點開一律播放 720p 串流版（檔案約 1/3，GitHub 尚未快取時也能 1–2 秒內開始播）
   const MOBILE = matchMedia("(max-width: 900px), (pointer: coarse)").matches || !!(navigator.connection && navigator.connection.saveData);
   const HAS_M = new Set(["sportsnote", "on-event", "breaker", "breaker-short", "lin-doc", "vface", "cactus", "day0", "tsmc", "fx-guide", "anim", "oasis"]);
-  const FULL = s => ONLINE ? (WEB[s] ? `${V(s)}-${WEB[s]}.mp4` : `${V(s)}-preview.mp4`) : `${V(s)}${MOBILE && HAS_M.has(s) ? "-m" : ""}.mp4`;
+  const FULL = s => ONLINE ? (WEB[s] ? `${V(s)}-${WEB[s]}.mp4` : `${V(s)}-preview.mp4`) : `${V(s)}${HAS_M.has(s) ? "-m" : ""}.mp4`;
   const DUR = { anim: "1:34", tsmc: "1:05", "fx-guide": "0:30", sportsnote: "1:17", "on-event": "0:43", breaker: "1:14", "breaker-short": "0:52", "lin-doc": "1:37", vface: "0:43", cactus: "0:30", oasis: "13:28", day0: "0:52" };
   const tcFrom = (sec, fps = 24) => `${pad(Math.floor(sec / 3600))}:${pad(Math.floor(sec / 60) % 60)}:${pad(Math.floor(sec) % 60)}:${pad(Math.floor((sec % 1) * fps))}`;
 

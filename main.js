@@ -154,20 +154,41 @@
   const loader = $("#loader");
   const finish = () => { loader && loader.classList.add("done"); document.body.classList.remove("loading"); setTimeout(() => document.body.classList.add("ready"), 150); };
   if (!loader || !LOAD) finish();
-  else (function tick(now) {
-    const k = Math.min(1, (now - t0) / LOAD);
-    $("#loaderTc").textContent = tcFrom(k * 3.99);
-    $("#loaderBar").style.width = k * 100 + "%";
-    if (k < 1) return requestAnimationFrame(tick);
-    finish();
-  })(t0);
+  else {
+    // 真實載入進度：字型 15%、封面圖 15%、封面影片緩衝 5 秒 70%；另有時間保底，最慢約 5 秒一定進站
+    let fontsOK = 0, imgsOK = 0, shown = 0;
+    document.fonts && document.fonts.ready.then(() => fontsOK = 1);
+    const imgs = [hv.poster, "assets/img/portrait.jpg"];
+    let loadedImgs = 0; imgs.forEach(src => { const im = new Image(); im.onload = im.onerror = () => { loadedImgs++; imgsOK = loadedImgs / imgs.length; }; im.src = src; });
+    const vidProg = () => { try { const b = hv.buffered; return b.length ? Math.min(1, b.end(b.length - 1) / 5) : 0; } catch (e) { return 0; } };
+    const MIN = seen ? 700 : 1500, MAX = 5000;
+    (function tick(now) {
+      const el = now - t0;
+      const real = fontsOK * .15 + imgsOK * .15 + (hv.readyState >= 3 ? 1 : vidProg()) * .7;
+      const floor = Math.min(.95, el / 4000);                 // 網路再慢也會往前跑
+      let target = Math.max(real, floor);
+      if (el < MIN) target = Math.min(target, el / MIN);       // 至少讓動畫跑完
+      if (el > MAX) target = 1;
+      shown += (target - shown) * .12; if (target === 1 && shown > .995) shown = 1;
+      const pct = Math.round(shown * 100);
+      $("#ldNum").textContent = pct;
+      $("#loaderBar").style.width = pct + "%";
+      $("#loaderTc").textContent = tcFrom(el / 1000);
+      if (shown < 1) return requestAnimationFrame(tick);
+      setTimeout(finish, 250);
+    })(t0);
+  }
 
   /* ---------- 自動播放（進入畫面才載入、離開暫停） ---------- */
+  // 提前下載：影片離畫面還有約 1.5 個螢幕高時就先載入
+  const load = v => { if (!v.getAttribute("src")) { v.preload = "auto"; v.src = v.dataset.src; v.load(); } };
+  const pio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { load(e.target); pio.unobserve(e.target); } }), { rootMargin: "1200px 0px 1200px 0px" });
+  // 進入畫面就播放，離開就暫停
   const io = new IntersectionObserver(es => es.forEach(e => {
     const v = e.target;
-    if (e.isIntersecting) { if (!v.getAttribute("src")) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause();
+    if (e.isIntersecting) { load(v); v.play().catch(() => {}); } else v.pause();
   }), { threshold: 0.15 });
-  $$("video.auto").forEach(v => io.observe(v));
+  $$("video.auto").forEach(v => { pio.observe(v); io.observe(v); });
   // 手機省電模式等情況會擋自動播放：使用者第一次觸碰畫面時，把畫面上的影片都重新播放
   const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; };
   const kick = () => {

@@ -191,10 +191,32 @@
   <div class="frame center">
     <h2 class="thanks reveal"><span>THANK</span><em>you</em></h2>
     <p class="sub reveal">影片剪輯、拍攝、動畫合作，歡迎與我聯絡</p>
-    <div class="clinks reveal">
-      <button class="cl" data-copy="alanpan29351387@gmail.com" data-label="Email"><small>Email</small>alanpan29351387@gmail.com<em>複製</em></button>
-      <a class="cl" href="https://www.instagram.com/alanpan0925/" target="_blank" rel="noopener"><small>Instagram</small>@alanpan0925<em>↗</em></a>
-      <button class="cl" data-copy="+886905110752" data-label="電話"><small>Phone</small>+886 905 110 752<em>複製</em></button>
+    <div class="ct-grid reveal">
+      <div class="ct-info">
+        <h3>Let's work <em>together.</em></h3>
+        <p>有影片需求、合作提案，或只是想聊聊作品，都歡迎留言給我，通常 1–2 個工作天內回覆。</p>
+        <div class="ct-card mail">
+          <a class="ct-main" href="mailto:alanpan29351387@gmail.com?subject=%E4%BD%9C%E5%93%81%E9%9B%86%E5%90%88%E4%BD%9C%E8%A9%A2%E5%95%8F" aria-label="寄信給 Alan">
+            <small>Email</small><b>alanpan29351387@gmail.com</b><span class="go">寫信給我 ↗</span>
+          </a>
+          <div class="ct-sub">
+            <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=alanpan29351387@gmail.com&amp;su=%E4%BD%9C%E5%93%81%E9%9B%86%E5%90%88%E4%BD%9C%E8%A9%A2%E5%95%8F" target="_blank" rel="noopener">用 Gmail 寫信</a>
+            <button type="button" data-copy="alanpan29351387@gmail.com" data-label="Email">複製信箱</button>
+          </div>
+        </div>
+        <a class="ct-card ig" href="https://www.instagram.com/alanpan0925/" target="_blank" rel="noopener">
+          <small>Instagram</small><b>@alanpan0925</b><span class="go">追蹤 ↗</span>
+        </a>
+      </div>
+      <form class="ct-form" id="ctForm" novalidate>
+        <h4>留言給我</h4>
+        <label for="ctName">姓名<input id="ctName" name="name" type="text" autocomplete="name" placeholder="你的名字" required maxlength="60"></label>
+        <label for="ctEmail">Email<input id="ctEmail" name="email" type="email" autocomplete="email" placeholder="name@gmail.com" required maxlength="120"></label>
+        <label for="ctMsg">想說的話<textarea id="ctMsg" name="message" rows="5" placeholder="想合作的內容、預算、時程，或任何想說的話" required maxlength="3000"></textarea></label>
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="btn-gold" id="ctSend">送出訊息 →</button>
+        <p class="ct-status" id="ctStatus" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>

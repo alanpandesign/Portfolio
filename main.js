@@ -287,7 +287,7 @@
     if (!el) return;
     e.preventDefault(); open(el);
   });
-  const reel = () => { const m = document.createElement("div"); m.dataset.lb = "video"; m.dataset.src = "assets/video/montage.mp4"; m.dataset.title = "Alan Pan 作品精彩混剪"; open(m); };
+  const reel = () => { const m = document.createElement("div"); m.dataset.lb = "video"; m.dataset.src = V("montage.mp4"); m.dataset.title = "Alan Pan 作品精彩混剪"; open(m); };
   $("#showreelBtn").addEventListener("click", reel); $("#heroPlay").addEventListener("click", reel);
   $("#lbClose").addEventListener("click", close);
   $("#lbPrev").addEventListener("click", () => show(cur - 1));
@@ -361,4 +361,33 @@
       (function step(now) { const k = Math.min(1, (now - t1) / 1200); const v = Math.round(from + (value - from) * (1 - Math.pow(1 - k, 3))).toLocaleString(); num.textContent = v; if (hn) hn.textContent = v; if (k < 1) requestAnimationFrame(step); })(t1);
     } catch (e) { /* 計數服務連不上時就不顯示 */ }
   })();
+
+  /* ---------- 留言表單：透過 FormSubmit 寄到 Gmail ---------- */
+  const form = $("#ctForm");
+  if (form) form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const st = $("#ctStatus"), btn = $("#ctSend"), f = n => form.elements[n];
+    const name = f("name").value.trim(), email = f("email").value.trim(), msg = f("message").value.trim();
+    [f("name"), f("email"), f("message")].forEach(x => x.classList.remove("invalid"));
+    const bad = [];
+    if (!name) bad.push(f("name"));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) bad.push(f("email"));
+    if (msg.length < 2) bad.push(f("message"));
+    if (bad.length) { bad.forEach(x => x.classList.add("invalid")); bad[0].focus(); st.className = "ct-status err"; st.textContent = "請填寫姓名、正確的 Email 和想說的話。"; return; }
+    if (f("_honey").value) return;
+    btn.disabled = true; btn.textContent = "傳送中…"; st.className = "ct-status"; st.textContent = "";
+    try {
+      const r = await fetch("https://formsubmit.co/ajax/alanpan29351387@gmail.com", {
+        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ 姓名: name, email, 想說的話: msg, _subject: `作品集留言：${name}`, _replyto: email, _template: "table", _captcha: "false" })
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status);
+      form.classList.add("sent");
+      form.innerHTML = `<div><h4>謝謝你的訊息，${esc(name)}！</h4><p class="ct-status ok" style="margin-top:12px">我已經收到了，會盡快回覆到 ${esc(email)}。</p></div>`;
+    } catch (err) {
+      btn.disabled = false; btn.textContent = "送出訊息 →";
+      st.className = "ct-status err"; st.textContent = "送出失敗，請稍後再試，或直接寄信到 alanpan29351387@gmail.com。";
+    }
+  });
 })();

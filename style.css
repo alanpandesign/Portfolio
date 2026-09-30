@@ -504,3 +504,33 @@ footer a:hover{color:var(--gold)}
 .ld-title .ld-sub > i{display:block;opacity:1;transform:none;animation:none}
 .ld-title .ld-sub .ld-zh{display:inline-block;opacity:1;transform:none;animation:none}
 @media (max-width:720px){.ld-quote p{font-size:13.5px;letter-spacing:.02em}}
+
+/* ---------- 聯絡：資訊卡＋留言表單 ---------- */
+.ct-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(24px,4vw,56px);width:min(1100px,100%);margin-top:6px;text-align:left}
+.ct-info h3{font-family:var(--display);font-variation-settings:"SOFT" 100,"WONK" 1,"opsz" 144;font-weight:800;font-size:clamp(30px,3.2vw,46px);line-height:1.1;color:#fff}
+.ct-info h3 em{font-style:italic;font-weight:400;color:var(--gold)}
+.ct-info>p{margin:14px 0 26px;color:#fff;opacity:.85;font-size:14.5px;line-height:1.9;max-width:42ch}
+.ct-card{display:block;border:1px solid var(--line-2);border-radius:16px;background:rgba(0,0,0,.28);margin-bottom:14px;transition:border-color .3s,transform .3s var(--ease),background .3s}
+.ct-card:hover{border-color:var(--gold);background:rgba(245,194,27,.06)}
+.ct-main,.ct-card.ig{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:4px 12px;padding:18px 20px}
+.ct-card small{grid-column:1;font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.ct-card b{grid-column:1;font-family:var(--mono);font-weight:500;font-size:clamp(13px,1.3vw,15px);color:#fff;word-break:break-all}
+.ct-card .go{grid-column:2;grid-row:1/3;align-self:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#0b0b0b;background:var(--gold);padding:8px 14px;border-radius:999px;white-space:nowrap}
+.ct-card.ig .go{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.ct-sub{display:flex;gap:18px;padding:0 20px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.ct-sub a,.ct-sub button{color:#fff;opacity:.7;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:1px;transition:opacity .2s}
+.ct-sub a:hover,.ct-sub button:hover{opacity:1;color:var(--gold)}
+.ct-form{border:1px solid var(--line-2);border-radius:18px;background:rgba(0,0,0,.32);padding:clamp(20px,3vw,32px);display:grid;gap:16px}
+.ct-form h4{font-family:var(--serif);font-weight:900;font-size:22px;color:var(--gold);letter-spacing:.06em}
+.ct-form label{display:grid;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#fff}
+.ct-form input,.ct-form textarea{font:inherit;font-family:var(--sans);font-size:15px;letter-spacing:.02em;color:#fff;background:rgba(255,255,255,.04);border:1px solid #3a3633;border-radius:10px;padding:13px 14px;outline:none;transition:border-color .25s,background .25s;resize:vertical}
+.ct-form input::placeholder,.ct-form textarea::placeholder{color:rgba(255,255,255,.35)}
+.ct-form input:focus,.ct-form textarea:focus{border-color:var(--gold);background:rgba(245,194,27,.05)}
+.ct-form .invalid{border-color:#e0664f}
+.ct-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.ct-form .btn-gold{justify-self:start;border:0;cursor:pointer}
+.ct-form .btn-gold[disabled]{opacity:.6;cursor:wait}
+.ct-status{min-height:1.4em;font-size:14px;color:#fff}
+.ct-status.ok{color:var(--gold)}.ct-status.err{color:#ff9a86}
+.ct-form.sent{place-items:center;text-align:center;min-height:360px}
+@media (max-width:860px){.ct-grid{grid-template-columns:1fr}}

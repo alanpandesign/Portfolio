@@ -60,7 +60,7 @@ window.CHAPTERS = [
         category: "KOL Short-form", client: "弘琦有限公司",
         title: "KOL 知識型短影音", en: "Short-form Video Editing",
         meta: { Client: "弘琦有限公司", Role: "剪輯師（企劃・拍攝・剪輯・封面）", Period: "2025.12 – 2026.10" },
-        desc: "主導 KOL 影片全流程製作，從企劃、拍攝、剪輯到封面標題設計，打造累積百萬觀看與數千則留言的爆款短影音，將複雜金融知識轉化為淺顯易懂的內容。",
+        desc: "主導 KOL 影片全流程製作，從企劃、拍攝、剪輯到封面標題設計，打造累積千萬觀看與數千則留言的爆款短影音，將複雜金融知識轉化為淺顯易懂的內容。",
         phones: [
           { video: "day0", title: "Day 0", sub: "連續 30 天每天獲利 1% 挑戰" },
           { video: "tsmc", title: "上車台積電的機會來了嗎", sub: "台股知識短影音" },

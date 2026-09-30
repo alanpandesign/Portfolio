@@ -5,7 +5,7 @@
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const pad = n => String(n).padStart(2, "0");
   // 影片走 jsDelivr CDN（直接讀 GitHub 倉庫的檔案，比 GitHub Pages 快 10 倍以上）；本機或 CDN 失敗時改用原路徑
-  const MEDIA = /github\.io$/.test(location.hostname) ? "https://cdn.jsdelivr.net/gh/alanpandesign/Portfolio@media-v1/" : "";
+  const MEDIA = /github\.io$/.test(location.hostname) ? "https://cdn.jsdelivr.net/gh/alanpandesign/Portfolio@media-v2/" : "";
   const V = s => `${MEDIA}assets/video/${s}`;
   const LOCAL = src => MEDIA && src.startsWith(MEDIA) ? src.slice(MEDIA.length) : src;
   // 影片從 CDN 載入失敗時，自動改用 GitHub 上的同一個檔案
@@ -245,7 +245,7 @@
       v.controls = true; v.playsInline = true; v.preload = "auto";
       v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
       v.poster = src.includes("oasis-hls") ? V("oasis-poster.jpg") : src.replace(/(-m|-hero|-web|-preview)?\.mp4$/, "-poster.jpg");
-      if (/\.m3u8$/.test(src) && !v.canPlayType("application/vnd.apple.mpegurl") && window.Hls && Hls.isSupported()) {
+      if (/\.m3u8$/.test(src) && window.Hls && Hls.isSupported()) {
         hls = new Hls({ maxBufferLength: 20 }); hls.loadSource(src); hls.attachMedia(v);   // 長片串流（OASIS）
       } else v.src = src;
       const spin = document.createElement("div"); spin.className = "lb-load"; spin.innerHTML = "<i></i><span>影片載入中…</span>";

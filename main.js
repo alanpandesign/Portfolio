@@ -4,14 +4,22 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const pad = n => String(n).padStart(2, "0");
-  const V = s => `assets/video/${s}`;
+  // 影片走 jsDelivr CDN（直接讀 GitHub 倉庫的檔案，比 GitHub Pages 快 10 倍以上）；本機或 CDN 失敗時改用原路徑
+  const MEDIA = /github\.io$/.test(location.hostname) ? "https://cdn.jsdelivr.net/gh/alanpandesign/Portfolio@media-v1/" : "";
+  const V = s => `${MEDIA}assets/video/${s}`;
+  const LOCAL = src => MEDIA && src.startsWith(MEDIA) ? src.slice(MEDIA.length) : src;
+  // 影片從 CDN 載入失敗時，自動改用 GitHub 上的同一個檔案
+  document.addEventListener("error", e => {
+    const v = e.target; if (v.tagName !== "VIDEO" || !v.currentSrc || !MEDIA || !v.currentSrc.startsWith(MEDIA)) return;
+    const fb = LOCAL(v.currentSrc); v.src = fb; if (v.dataset.src) v.dataset.src = fb; v.play().catch(() => {});
+  }, true);
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ONLINE = !!window.ONLINE; // 線上版：只附預覽片段、不嵌入 YouTube
   const WEB = { sportsnote: "hero", anim: "web" }; // 線上版有 720p 完整版的影片
   // 點開一律播放 720p 串流版（檔案約 1/3，GitHub 尚未快取時也能 1–2 秒內開始播）
   const MOBILE = matchMedia("(max-width: 900px), (pointer: coarse)").matches || !!(navigator.connection && navigator.connection.saveData);
-  const HAS_M = new Set(["sportsnote", "on-event", "breaker", "breaker-short", "lin-doc", "vface", "cactus", "day0", "tsmc", "fx-guide", "anim", "oasis"]);
-  const FULL = s => ONLINE ? (WEB[s] ? `${V(s)}-${WEB[s]}.mp4` : `${V(s)}-preview.mp4`) : `${V(s)}${HAS_M.has(s) ? "-m" : ""}.mp4`;
+  const HAS_M = new Set(["sportsnote", "on-event", "breaker", "breaker-short", "lin-doc", "vface", "cactus", "day0", "tsmc", "fx-guide", "anim"]);
+  const FULL = s => ONLINE ? (WEB[s] ? `${V(s)}-${WEB[s]}.mp4` : `${V(s)}-preview.mp4`) : (s === "oasis" ? V("oasis-hls/index.m3u8") : `${V(s)}${HAS_M.has(s) ? "-m" : ""}.mp4`);
   const DUR = { anim: "1:34", tsmc: "1:05", "fx-guide": "0:30", sportsnote: "1:17", "on-event": "0:43", breaker: "1:14", "breaker-short": "0:52", "lin-doc": "1:37", vface: "0:43", cactus: "0:30", oasis: "13:28", day0: "0:52" };
   const tcFrom = (sec, fps = 24) => `${pad(Math.floor(sec / 3600))}:${pad(Math.floor(sec / 60) % 60)}:${pad(Math.floor(sec) % 60)}:${pad(Math.floor((sec % 1) * fps))}`;
 
@@ -138,6 +146,7 @@
 
   /* ---------- HERO：監看同步 ---------- */
   const hv = $("#heroVid"), ph = $("#playhead");
+  hv.dataset.src = V("montage.mp4"); hv.src = hv.dataset.src;
   hv.addEventListener("timeupdate", () => {
     const d = hv.duration || 12, r = hv.currentTime / d, t = tcFrom(3600 + hv.currentTime);
     $("#tc").textContent = t; $("#tlTc").textContent = t;
@@ -155,6 +164,8 @@
   let seen = false; try { seen = sessionStorage.getItem("ap-seen") === "1"; sessionStorage.setItem("ap-seen", "1"); } catch (e) {}
   const LOAD = reduce || ONLINE ? 0 : seen ? 500 : 1700, t0 = performance.now();
   const loader = $("#loader");
+  const loadHls = () => { if (window.Hls || document.getElementById("hlsjs")) return; const s = document.createElement("script"); s.id = "hlsjs"; s.src = "https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"; document.head.appendChild(s); };
+  setTimeout(loadHls, 2500);
   const finish = () => { loader && loader.classList.add("done"); document.body.classList.remove("loading"); setTimeout(() => { document.body.classList.add("ready"); onScroll(); }, 150); };
   if (!loader || !LOAD) finish();
   else {
@@ -226,14 +237,17 @@
   function show(i) {
     cur = (i + list.length) % list.length;
     const el = list[cur], src = el.dataset.src;
+    if (hls) { hls.destroy(); hls = null; }
     stage.innerHTML = "";
     if (el.dataset.lb === "video") {
       // 在點擊當下直接呼叫 play()，手機才允許有聲播放；先顯示封面圖與讀取中
       const v = document.createElement("video");
       v.controls = true; v.playsInline = true; v.preload = "auto";
       v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
-      v.poster = src.replace(/(-m|-hero|-web|-preview)?\.mp4$/, "-poster.jpg");
-      v.src = src;
+      v.poster = src.includes("oasis-hls") ? V("oasis-poster.jpg") : src.replace(/(-m|-hero|-web|-preview)?\.mp4$/, "-poster.jpg");
+      if (/\.m3u8$/.test(src) && !v.canPlayType("application/vnd.apple.mpegurl") && window.Hls && Hls.isSupported()) {
+        hls = new Hls({ maxBufferLength: 20 }); hls.loadSource(src); hls.attachMedia(v);   // 長片串流（OASIS）
+      } else v.src = src;
       const spin = document.createElement("div"); spin.className = "lb-load"; spin.innerHTML = "<i></i><span>影片載入中…</span>";
       const snd = document.createElement("button"); snd.className = "lb-snd"; snd.textContent = "🔊 開啟聲音"; snd.hidden = true;
       snd.onclick = () => { v.muted = false; v.play().catch(() => {}); snd.hidden = true; };
@@ -263,7 +277,9 @@
     if (i < 0) { list = [el]; i = 0; }
     show(i); lb.classList.add("open"); document.body.style.overflow = "hidden"; hv.pause();
   }
-  function close() { const v = stage.querySelector("video"); if (v) { v.pause(); v.removeAttribute("src"); v.load(); } lb.classList.remove("open"); stage.innerHTML = ""; document.body.style.overflow = ""; restoreAll(); }
+  let hls = null;
+  function close() { if (hls) { hls.destroy(); hls = null; }
+    const v = stage.querySelector("video"); if (v) { v.pause(); v.removeAttribute("src"); v.load(); } lb.classList.remove("open"); stage.innerHTML = ""; document.body.style.overflow = ""; restoreAll(); }
   document.addEventListener("click", e => {
     const el = e.target.closest("[data-lb]");
     if (!el) return;

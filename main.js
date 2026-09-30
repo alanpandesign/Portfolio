@@ -21,7 +21,7 @@
     if (m.img) return `<div class="item ${extra}" style="--ar:${ar}" data-lb="img" data-src="assets/img/${m.img}" data-title="${title(p, m)}"><img src="assets/img/${m.img}" alt="${title(p, m)}" loading="lazy"><div class="cap"><span>${title(p, m)}</span><em>VIEW ⤢</em></div></div>`;
     return `<div class="item ${extra}" style="--ar:${ar}" data-lb="video" data-src="${FULL(m.video)}" data-title="${title(p, m)}">
       <video class="auto" data-src="${V(m.video)}-preview.mp4" poster="${V(m.video)}-poster.jpg" muted autoplay loop playsinline preload="none"></video>
-      <span class="badge">PLAYING</span><div class="cap"><span>${title(p, m)}</span><em>▶ 完整版 ${DUR[m.video] || ""}</em></div></div>`;
+      <span class="badge">▶ VIDEO</span><div class="cap"><span>${title(p, m)}</span><em>▶ 完整版 ${DUR[m.video] || ""}</em></div></div>`;
   }
   function phone(ph, p) {
     const inner = ph.video

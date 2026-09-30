@@ -465,3 +465,8 @@ footer a:hover{color:var(--gold)}
 .loader.done .ld-film{opacity:0!important;transition:opacity .3s}
 @media (max-width:720px){.ld-film{width:14px;background-size:100% 100%,8px 20px;background-position:0 0,3px 0}.ld-quote p{font-size:14px;letter-spacing:.04em}}
 @media (prefers-reduced-motion:reduce){.ld-title .ch{opacity:1;transform:none;filter:none}}
+
+/* 移除錄影感：不再有閃爍紅點 */
+.badge::before{display:none}
+.osd span:first-child{color:rgba(255,255,255,.85)}
+@media (max-width:720px){.hud-views{border-left:0;padding-left:0}}

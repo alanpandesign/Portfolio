@@ -386,3 +386,14 @@ footer a:hover{color:var(--gold)}
 .views{display:inline-flex;align-items:center;gap:6px}
 .views i{font-style:normal;color:#e33;font-size:8px;animation:blink 1.6s infinite}
 .views b{color:var(--gold);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* REC 列上的瀏覽人次；REC 列一進站就顯示，手機也顯示精簡版 */
+.hud-views{display:inline-flex;align-items:center;gap:6px;color:#fff;padding-left:14px;border-left:1px solid rgba(255,255,255,.18)}
+.hud-views[hidden]{display:none}
+.hud-views b{color:var(--gold);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.hud-views svg{opacity:.85}
+@media (max-width:720px){
+  .hud{display:flex;left:12px;bottom:12px;gap:10px;padding:6px 12px;font-size:10px}
+  #hudTc,#hudCh{display:none}
+  .hud-views{padding-left:10px}
+}

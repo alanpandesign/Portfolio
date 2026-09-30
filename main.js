@@ -152,7 +152,7 @@
   let seen = false; try { seen = sessionStorage.getItem("ap-seen") === "1"; sessionStorage.setItem("ap-seen", "1"); } catch (e) {}
   const LOAD = reduce || ONLINE ? 0 : seen ? 500 : 1700, t0 = performance.now();
   const loader = $("#loader");
-  const finish = () => { loader && loader.classList.add("done"); document.body.classList.remove("loading"); setTimeout(() => document.body.classList.add("ready"), 150); };
+  const finish = () => { loader && loader.classList.add("done"); document.body.classList.remove("loading"); setTimeout(() => { document.body.classList.add("ready"); onScroll(); }, 150); };
   if (!loader || !LOAD) finish();
   else {
     // 真實載入進度：字型 15%、封面圖 15%、封面影片緩衝 5 秒 70%；另有時間保底，最慢約 5 秒一定進站
@@ -256,7 +256,7 @@
     const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
     nav.classList.toggle("solid", y > 40);
     $("#progress").style.width = (y / H * 100) + "%";
-    hud.classList.toggle("show", y > innerHeight * .8);
+    hud.classList.toggle("show", document.body.classList.contains("ready"));
     $("#hudTc").textContent = tcFrom(y / 60);
     let name = "CH 00 — INTRO";
     for (const s of secs) if (s.getBoundingClientRect().top < innerHeight * .5) name = s.dataset.ch.startsWith("CH") ? s.dataset.ch : s.dataset.ch;
@@ -296,9 +296,9 @@
       const r = await fetch(`${API}/${counted || local ? "get" : "hit"}/${KEY}`);
       const { value } = await r.json(); if (typeof value !== "number") return;
       if (!counted && !local) { try { localStorage.setItem("ap-viewed", "1"); } catch (e) {} }
-      box.hidden = false;
+      box.hidden = false; const hb = $("#hudViews"), hn = $("#hudViewsNum"); if (hb) hb.hidden = false;
       const from = Math.max(1000, value - 30), t1 = performance.now();
-      (function step(now) { const k = Math.min(1, (now - t1) / 1200); num.textContent = Math.round(from + (value - from) * (1 - Math.pow(1 - k, 3))).toLocaleString(); if (k < 1) requestAnimationFrame(step); })(t1);
+      (function step(now) { const k = Math.min(1, (now - t1) / 1200); const v = Math.round(from + (value - from) * (1 - Math.pow(1 - k, 3))).toLocaleString(); num.textContent = v; if (hn) hn.textContent = v; if (k < 1) requestAnimationFrame(step); })(t1);
     } catch (e) { /* 計數服務連不上時就不顯示 */ }
   })();
 })();

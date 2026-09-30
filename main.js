@@ -178,8 +178,10 @@
     const MIN = seen ? 900 : 3000, MAX = 6000;
     // 標題逐字飛入，完成後 Alan 加上流光
     let ci = 0;
-    $$(".ld-title > span").forEach(sp => { sp.innerHTML = [...sp.textContent].map(ch => `<span class="ch" style="--i:${ci++}">${ch}</span>`).join(""); });
-    setTimeout(() => { const en = $(".ld-en"); if (en) { en.textContent = en.textContent; en.classList.add("shine"); } }, 250 + ci * 70 + 900);
+    $$(".ld-zh").forEach(sp => { sp.innerHTML = [...sp.textContent].map(ch => `<span class="ch" style="--i:${ci++}">${ch}</span>`).join(""); });
+    // Alan：等字型載入後才開始描字（最多等 0.9 秒）
+    const alan = $(".ld-alan");
+    if (alan) { const go = () => alan.classList.add("go"); Promise.race([document.fonts ? document.fonts.load('italic 600 100px "Cormorant Garamond"') : 0, new Promise(r => setTimeout(r, 900))]).then(go, go); }
     // 座右銘逐字打出
     const q = $("#ldQuote"), qt = q ? q.dataset.text : "", caret = q && q.querySelector(".caret");
     if (q) {

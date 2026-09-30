@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#0b0b0b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="loading">
@@ -24,7 +24,25 @@
   <div class="ld-hud top"><span>ALAN PAN</span><span class="mid">VIDEO PORTFOLIO</span><span id="loaderTc">00:00:00:00</span></div>
   <div class="ld-center">
     <div class="ld-eyebrow">Video Portfolio · 2023 — 2026</div>
-    <h1 class="ld-title"><span class="ld-en">Alan</span><span class="ld-zh">影音作品集</span></h1>
+    <h1 class="ld-title" aria-label="Alan 影音作品集">
+      <svg class="ld-alan" viewBox="0 0 620 230" aria-hidden="true">
+        <defs>
+          <linearGradient id="ldFoil" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8a6412"/><stop offset=".22" stop-color="#e9b73a"/><stop offset=".42" stop-color="#fff1bf"/>
+            <stop offset=".55" stop-color="#f5c21b"/><stop offset=".78" stop-color="#b8860b"/><stop offset="1" stop-color="#f7d774"/>
+          </linearGradient>
+          <linearGradient id="ldShine" x1="-1" y1="0" x2="0" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            <animate attributeName="x1" values="-1;1.6" dur="3.2s" begin="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="x2" values="0;2.6" dur="3.2s" begin="2.4s" repeatCount="indefinite"/>
+          </linearGradient>
+        </defs>
+        <text class="a-stroke" x="50%" y="172" text-anchor="middle">Alan</text>
+        <text class="a-fill" x="50%" y="172" text-anchor="middle">Alan</text>
+        <text class="a-shine" x="50%" y="172" text-anchor="middle">Alan</text>
+      </svg>
+      <span class="ld-sub"><i></i><span class="ld-zh">影音作品集</span><i></i></span>
+    </h1>
     <blockquote class="ld-quote">
       <p id="ldQuote" data-text="「以影為筆，以剪為刀，賦予影像第二次生命。」"><span class="caret"></span></p>
       <cite>── Video Editor &amp; Visual Planner</cite>

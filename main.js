@@ -285,4 +285,20 @@
     const done = () => { t.textContent = `已複製 ${b.dataset.label || ""}`; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 1800); };
     try { navigator.clipboard.writeText(v).then(done, () => getSelection().selectAllChildren(b)); } catch (err) { getSelection().selectAllChildren(b); }
   }));
+
+  /* ---------- 瀏覽次數（從 1000 開始；每個瀏覽器只算一次，本機測試不計） ---------- */
+  (async () => {
+    const box = $("#views"), num = $("#viewsNum"); if (!box) return;
+    const API = "https://abacus.jasoncameron.dev", KEY = "alanpandesign-portfolio/visits";
+    const local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    let counted = false; try { counted = localStorage.getItem("ap-viewed") === "1"; } catch (e) {}
+    try {
+      const r = await fetch(`${API}/${counted || local ? "get" : "hit"}/${KEY}`);
+      const { value } = await r.json(); if (typeof value !== "number") return;
+      if (!counted && !local) { try { localStorage.setItem("ap-viewed", "1"); } catch (e) {} }
+      box.hidden = false;
+      const from = Math.max(1000, value - 30), t1 = performance.now();
+      (function step(now) { const k = Math.min(1, (now - t1) / 1200); num.textContent = Math.round(from + (value - from) * (1 - Math.pow(1 - k, 3))).toLocaleString(); if (k < 1) requestAnimationFrame(step); })(t1);
+    } catch (e) { /* 計數服務連不上時就不顯示 */ }
+  })();
 })();

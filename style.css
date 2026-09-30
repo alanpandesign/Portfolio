@@ -381,3 +381,8 @@ footer a:hover{color:var(--gold)}
 .loader .loader-bar{width:min(460px,72vw)}
 .loader .loader-tc{display:none}
 @keyframes ldIn{to{opacity:1;transform:none}}
+
+/* 瀏覽次數 */
+.views{display:inline-flex;align-items:center;gap:6px}
+.views i{font-style:normal;color:#e33;font-size:8px;animation:blink 1.6s infinite}
+.views b{color:var(--gold);font-weight:500;font-variant-numeric:tabular-nums}

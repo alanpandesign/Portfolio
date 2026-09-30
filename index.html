@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>潘睿能 Alan Pan｜Video Portfolio</title>
+<meta name="description" content="潘睿能 Alan Pan — 影片剪輯、拍攝、3D 動畫。Video Editor · Videographer · 3D Animator based in Taipei.">
+<meta property="og:title" content="潘睿能 Alan Pan｜Video Portfolio">
+<meta property="og:image" content="assets/video/sportsnote-poster.jpg">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+<!-- 開場載入 -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-top"><span>● REC</span><span>ALAN PAN — PORTFOLIO</span><span>4K · 24FPS</span></div>
+  <div class="loader-tc" id="loaderTc">00:00:00:00</div>
+  <div class="loader-bar"><b id="loaderBar"></b></div>
+  <div class="loader-bottom"><span>ISO 800</span><span>1/50</span><span>F2.8</span><span>5600K</span></div>
+</div>
+
+<div class="progress"><b id="progress"></b></div>
+<div class="cursor" id="cursor"><span></span></div>
+
+<nav class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="回到頂端"><i>AP</i><span>ALAN PAN</span></a>
+  <ul class="links">
+    <li><a href="#index">Index</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#videography">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Let's talk <em>↗</em></a>
+  <button class="burger" id="burger" aria-label="選單"><i></i><i></i></button>
+</nav>
+<div class="mnav" id="mnav">
+  <a href="#index">Index</a><a href="#about">About</a><a href="#videography">Work</a><a href="#contact">Contact</a>
+</div>
+
+<!-- HUD 攝影機資訊 -->
+<div class="hud" id="hud"><span class="rec">● REC</span><span id="hudTc">00:00:00:00</span><span id="hudCh">CH 00 — INTRO</span></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="nle" id="nle">
+    <div class="nle-bar">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div class="nle-menu"><b>⌂</b><span>Import</span><span class="on">Edit</span><span>Export</span></div>
+      <div class="nle-title">Alan Pan Portfolio.prproj</div>
+      <div class="nle-ico"><span>⌕</span><span>▭</span><span>⤢</span></div>
+    </div>
+    <div class="nle-ws">
+      <section class="pn pn-proj side">
+        <div class="tabs"><b>Project: Alan Pan Portfolio</b><span>Media Browser</span><span>»</span></div>
+        <div class="pn-sub"><span>Alan Pan Portfolio.prproj</span><span id="binCount">13 Items</span></div>
+        <div class="search">⌕ <em>Search</em></div>
+        <div class="bin" id="bin"></div>
+        <div class="pn-foot"><span>✎</span><span>☰</span><span>▦</span><span class="grow"></span><span>▢</span><span>🗀</span></div>
+      </section>
+      <section class="pn pn-mon">
+        <div class="tabs"><b>Program: HIGHLIGHTS</b><span>≡</span><span class="grow"></span><span>Source: (no clips)</span></div>
+        <div class="screen">
+          <video id="heroVid" src="assets/video/montage.mp4" poster="assets/video/montage-poster.jpg" muted autoplay loop playsinline preload="auto"></video>
+          <button class="snd" id="heroSnd" aria-pressed="false">🔇 開啟聲音</button>
+          <div class="focus"><i></i><i></i><i></i><i></i><span>FACE 01</span></div>
+          <div class="osd"><span>● 4K</span><span>ISO 800</span><span>F2.8</span></div>
+        </div>
+        <div class="mon-info"><span class="tc" id="tc">01:00:18:00</span><span>Fit ▾</span><span class="grow"></span><span>Full ▾</span><span>01:00:28:20</span></div>
+        <div class="scrub"><b id="scrub"></b><i id="scrubHead"></i></div>
+        <div class="transport">
+          <span>⇤</span><span>{</span><span>}</span><span>⏮</span><span>◂|</span><button id="heroPlay" aria-label="播放 Showreel">▶</button><span>|▸</span><span>⏭</span><span>⊞</span><span>⊟</span><span>📷</span>
+        </div>
+      </section>
+      <section class="pn pn-lum side">
+        <div class="tabs"><span>Effect Controls</span><b>Lumetri Color</b><span>»</span></div>
+        <div class="lum-row"><span>Master * A001_Timeline</span><span>▾</span></div>
+        <div class="lum-sec">▾ Basic Correction <em>✓</em></div>
+        <label class="chk"><i></i>Face Detection</label>
+        <div class="wheels">
+          <div><div class="wheel"><b></b></div><small>Shadows</small></div>
+          <div><div class="wheel"><b></b></div><small>Midtones</small></div>
+          <div><div class="wheel"><b></b></div><small>Highlights</small></div>
+        </div>
+        <div class="sliders">
+          <div><span>Temperature</span><i style="--v:62%"></i><span>12.0</span></div>
+          <div><span>Contrast</span><i style="--v:56%"></i><span>8.0</span></div>
+          <div><span>Saturation</span><i style="--v:44%"></i><span>82.0</span></div>
+        </div>
+      </section>
+    </div>
+    <div class="tl">
+      <div class="tl-tabs"><b>PORTFOLIO</b><span>×</span><span class="grow"></span><span class="tc" id="tlTc">01:00:18:00</span></div>
+      <div class="tl-body">
+        <div class="tools"><b>▲</b><span>⇥</span><span>⟷</span><span>✂</span><span>⇆</span><span>✎</span><span>✋</span><span>T</span></div>
+        <div class="heads" id="heads"></div>
+        <div class="tracks" id="tracks">
+          <div class="ruler" id="ruler"></div>
+          <div class="lanes" id="lanes"></div>
+          <div class="playhead" id="playhead"></div>
+        </div>
+        <div class="meters"><i></i><i></i><small>dB</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-cap">
+    <div class="hc-l"><span class="eyebrow">Video Editor · Videographer · 3D Animator</span><h1>潘睿能 <em>Alan Pan</em></h1></div>
+    <button class="btn-gold" id="showreelBtn">▶ Play Showreel</button>
+    <a class="scroll" href="#marquee">Scroll <i></i></a>
+  </div>
+</header>
+
+<div class="marquee" id="marquee" aria-hidden="true"><div class="mq-track">
+  <span>Video Editing</span><b>✦</b><span class="o">Cinematography</span><b>✦</b><span>3D Animation</span><b>✦</b><span class="o">Short-form</span><b>✦</b><span>Color Grading</span><b>✦</b><span class="o">Documentary</span><b>✦</b>
+  <span>Video Editing</span><b>✦</b><span class="o">Cinematography</span><b>✦</b><span>3D Animation</span><b>✦</b><span class="o">Short-form</span><b>✦</b><span>Color Grading</span><b>✦</b><span class="o">Documentary</span><b>✦</b>
+</div></div>
+
+<!-- ============ ABOUT ============ -->
+<section class="slide glow-r about" id="about" data-ch="ABOUT">
+  <div class="frame">
+    <div class="ab-grid">
+      <div class="ab-id reveal">
+        <div class="avatar"><img src="assets/img/portrait.jpg" alt="潘睿能 Alan Pan"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48"/></svg></div>
+        <h2>潘睿能<small>Alan Pan</small></h2>
+        <p class="role">Video Editor<br>Videographer<br>3D Animator</p>
+      </div>
+      <div class="ab-main reveal">
+        <p class="lead">我是潘睿能，一位充滿創意的影像設計師，專長於<b>影片剪輯</b>與<b>動畫製作</b>，擁有<b>廣告企劃</b>與<b>視覺設計</b>的豐富經驗。累積<b>五年以上剪輯經驗</b>、剪輯超過 <b>1000 支影片</b>，並與 <b>10 家以上網紅媒體</b>合作。對細節把控和視覺美感有著高度要求，能迅速理解客戶需求，並將其轉化為具創意與高效的影片，確保每一個細節都與品牌目標契合。</p>
+        <div class="cols">
+          <div><h5>Education</h5><ul><li><b>實踐大學</b></li><li>媒體傳達設計系</li></ul></div>
+          <div><h5>Software</h5><div class="sw"><span class="pr">Pr</span><span class="ae">Ae</span><span class="ps">Ps</span><span class="ai">Ai</span><span class="cc" title="剪映 CapCut" aria-label="剪映 CapCut"><svg viewBox="0 0 24.2 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M24.189 6.442V2.671l-4.535 2.383V4.91c.002-1.505-1.078-2.411-2.638-2.411H2.64C.993 2.5 0 3.407 0 4.91v3.81L6.354 12L0 15.316v3.8C0 20.595 1 21.5 2.64 21.5h14.373c1.56 0 2.639-.907 2.639-2.382v-.197l4.536 2.409v-3.828L13.64 12l10.55-5.557zM9.982 13.873l7.797 4.083H2.157zm7.741-7.828l-7.742 4.057l-7.825-4.057z"/></svg></span><span class="bl" title="Blender" aria-label="Blender"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.51 13.214c.046-.8.438-1.506 1.03-2.006a3.424 3.424 0 0 1 2.212-.79c.85 0 1.631.3 2.211.79.592.5.983 1.206 1.028 2.005.045.823-.285 1.586-.865 2.153a3.389 3.389 0 0 1-2.374.938 3.393 3.393 0 0 1-2.376-.938c-.58-.567-.91-1.33-.865-2.152M7.35 14.831c.006.314.106.922.256 1.398a7.372 7.372 0 0 0 1.593 2.757 8.227 8.227 0 0 0 2.787 2.001 8.947 8.947 0 0 0 3.66.76 8.964 8.964 0 0 0 3.657-.772 8.285 8.285 0 0 0 2.785-2.01 7.428 7.428 0 0 0 1.592-2.762 6.964 6.964 0 0 0 .25-3.074 7.123 7.123 0 0 0-1.016-2.779 7.764 7.764 0 0 0-1.852-2.043h.002L13.566 2.55l-.02-.015c-.492-.378-1.319-.376-1.86.002-.547.382-.609 1.015-.123 1.415l-.001.001 3.126 2.543-9.53.01h-.013c-.788.001-1.545.518-1.695 1.172-.154.665.38 1.217 1.2 1.22V8.9l4.83-.01-8.62 6.617-.034.025c-.813.622-1.075 1.658-.563 2.313.52.667 1.625.668 2.447.004L7.414 14s-.069.52-.063.831zm12.09 1.741c-.97.988-2.326 1.548-3.795 1.55-1.47.004-2.827-.552-3.797-1.538a4.51 4.51 0 0 1-1.036-1.622 4.282 4.282 0 0 1 .282-3.519 4.702 4.702 0 0 1 1.153-1.371c.942-.768 2.141-1.183 3.396-1.185 1.256-.002 2.455.41 3.398 1.175.48.391.87.854 1.152 1.367a4.28 4.28 0 0 1 .522 1.706 4.236 4.236 0 0 1-.239 1.811 4.54 4.54 0 0 1-1.035 1.626"/></svg></span></div></div>
+          <div><h5>Expertise</h5><ul><li>影片剪輯・後製特效</li><li>拍攝・導演統籌</li><li>3D 動畫・動態設計</li><li>廣告企劃・視覺設計</li></ul></div>
+          <div><h5>Contact</h5><ul><li>alanpan29351387@gmail.com</li><li>IG @alanpan0925</li><li>Taipei, Taiwan</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="stats reveal">
+      <div><b data-count="5" data-suffix="+">0</b><span>年剪輯經驗</span></div>
+      <div><b data-count="1000" data-suffix="+">0</b><span>支剪輯影片</span></div>
+      <div><b data-count="10" data-suffix="+">0</b><span>家網紅媒體合作</span></div>
+      <div><b data-count="1000000" data-suffix="+">0</b><span>短影音累積觀看</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDEX ============ -->
+<section class="slide glow-l index" id="index" data-ch="INDEX">
+  <div class="frame center">
+    <div class="ix-head reveal"><span class="script">intro</span><h2><span class="o">I</span>NDEX</h2></div>
+    <ol class="ix-list" id="ixList"></ol>
+    <div class="ix-preview" id="ixPreview"><video muted loop playsinline></video><img alt=""></div>
+  </div>
+</section>
+
+<main id="chapters"></main>
+
+<!-- ============ CONTACT ============ -->
+<section class="slide glow-both contact" id="contact" data-ch="CONTACT">
+  <div class="frame center">
+    <h2 class="thanks reveal"><span>THANK</span><em>you</em></h2>
+    <p class="sub reveal">影片剪輯、拍攝、動畫合作，歡迎與我聯絡</p>
+    <div class="clinks reveal">
+      <button class="cl" data-copy="alanpan29351387@gmail.com" data-label="Email"><small>Email</small>alanpan29351387@gmail.com<em>複製</em></button>
+      <a class="cl" href="https://www.instagram.com/alanpan0925/" target="_blank" rel="noopener"><small>Instagram</small>@alanpan0925<em>↗</em></a>
+      <button class="cl" data-copy="+886905110752" data-label="電話"><small>Phone</small>+886 905 110 752<em>複製</em></button>
+    </div>
+  </div>
+</section>
+<footer><span>© 2026 潘睿能 ALAN PAN</span><span>TAIPEI · TAIWAN</span><a href="#top">BACK TO TOP ↑</a></footer>
+
+<!-- 燈箱 -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="作品播放">
+  <div class="lb-top"><span id="lbTitle"></span><span id="lbCount"></span><button id="lbClose" aria-label="關閉">✕</button></div>
+  <button class="lb-nav prev" id="lbPrev" aria-label="上一個">‹</button>
+  <div class="lb-stage" id="lbStage"></div>
+  <button class="lb-nav next" id="lbNext" aria-label="下一個">›</button>
+</div>
+<div class="toast" id="toast">已複製 Email</div>
+
+<script src="projects.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

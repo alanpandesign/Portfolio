@@ -535,18 +535,4 @@ footer a:hover{color:var(--gold)}
 .ct-form.sent{place-items:center;text-align:center;min-height:360px}
 @media (max-width:860px){.ct-grid{grid-template-columns:1fr}}
 
-/* ---------- 按讚 ---------- */
-.hud{pointer-events:auto}
-.hud-like{position:relative;display:inline-flex;align-items:center;gap:6px;padding:0 0 0 14px;border-left:1px solid rgba(255,255,255,.18);color:#fff;font-family:var(--mono);font-size:inherit;letter-spacing:.06em;cursor:pointer}
-.hud-like[hidden]{display:none}
-.hud-like svg{fill:none;stroke:#fff;stroke-width:2;transition:transform .3s var(--ease),fill .25s,stroke .25s}
-.hud-like:hover svg{stroke:var(--gold);transform:scale(1.12)}
-.hud-like b{color:var(--gold);font-weight:500;font-variant-numeric:tabular-nums}
-.hud-like.liked svg{fill:#ff4d6d;stroke:#ff4d6d;animation:likePop .5s var(--ease)}
-.hud-like.liked{cursor:default}
-.hud-like .plus{position:absolute;left:14px;top:-4px;font-size:11px;color:#ff4d6d;opacity:0;pointer-events:none}
-.hud-like.liked .plus{animation:likeUp .9s var(--ease)}
-.hud-like:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:4px}
-@keyframes likePop{0%{transform:scale(1)}35%{transform:scale(1.5)}100%{transform:scale(1)}}
-@keyframes likeUp{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-22px)}}
-@media (max-width:720px){.hud-like{padding-left:10px}}
+

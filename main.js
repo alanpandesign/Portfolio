@@ -391,21 +391,4 @@
     }
   });
 
-  /* ---------- 按讚（從 100 開始；每次打開網頁可以按一次） ---------- */
-  (async () => {
-    const btn = $("#likeBtn"), num = $("#likeNum"), foot = $("#likesFoot"), footNum = $("#likeNumFoot"); if (!btn) return;
-    const API = "https://abacus.jasoncameron.dev", KEY = "alanpandesign-portfolio/likes";
-    const local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-    const show = n => { const s = Number(n).toLocaleString(); num.textContent = s; if (footNum) footNum.textContent = s; };
-    let count = 100;
-    try { const r = await fetch(`${API}/get/${KEY}`); const { value } = await r.json(); if (typeof value === "number") count = value; } catch (e) { return; }
-    show(count); btn.hidden = false; if (foot) foot.hidden = false;
-    btn.addEventListener("click", async () => {
-      if (btn.classList.contains("liked")) return;
-      btn.classList.add("liked"); btn.setAttribute("aria-pressed", "true"); btn.setAttribute("aria-label", "已按讚，謝謝！");
-      show(++count);                                  // 先立刻 +1，畫面不用等
-      if (local) return;                              // 本機測試不計入
-      try { const r = await fetch(`${API}/hit/${KEY}`); const { value } = await r.json(); if (typeof value === "number") { count = value; show(count); } } catch (e) {}
-    });
-  })();
 })();

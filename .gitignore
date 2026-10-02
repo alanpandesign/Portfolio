@@ -1,10 +1,6 @@
 # 工作檔（不上傳）
 montage-work/
 *.log
-*.sh
-*.py
-grade*.txt
-tsmc-bright.txt
 online.html
 # 線上 Artifact 專用檔
 assets/video/sportsnote-hero.mp4

@@ -1,0 +1,1 @@
+curves=all='0/0.03 0.25/0.245 0.5/0.525 0.8/0.84 1/0.98',colorbalance=rs=-0.03:gs=0.0:bs=0.045:rm=-0.012:gm=0.0:bm=0.018:rh=0.012:gh=0.0:bh=0.004,huesaturation=saturation=-0.3:colors=g,huesaturation=saturation=-0.28:colors=y,eq=saturation=0.86:brightness=0.015,vignette=angle=PI/6,noise=alls=4:allf=t+u

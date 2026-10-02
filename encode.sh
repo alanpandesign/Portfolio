@@ -1,9 +1,11 @@
 #!/bin/bash
+# 路徑自動偵測（任何電腦、任何磁碟代號都能用）
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"          # 作品集網站 資料夾
+FF="${FFMPEG:-$(command -v ffmpeg || echo ffmpeg)}"
 # 把 ../video 的原檔轉成網頁用版本（原檔不會被修改）
 # 用法：bash encode.sh
-FF="/c/Users/User/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.0.1-full_build/bin/ffmpeg.exe"
-SRC="/d/作品集網站/video"
-OUT="/d/作品集網站/site/assets/video"
+SRC="$ROOT/video"
+OUT="$ROOT/site/assets/video"
 # slug | 原檔 | 預覽起點(秒)
 LIST="sportsnote|運動筆記showreels.mp4|18
 on-event|On_活動影片.mp4|2

@@ -1,8 +1,10 @@
 #!/bin/bash
+# 路徑自動偵測（任何電腦、任何磁碟代號都能用）
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"          # 作品集網站 資料夾
+FF="${FFMPEG:-$(command -v ffmpeg || echo ffmpeg)}"
 # 手機版完整影片：短邊 720、較低位元率，點開就能快速播放
 cd "$(dirname "$0")"
-FF="/c/Users/User/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.0.1-full_build/bin/ffmpeg.exe"
-SRC="/d/作品集網站/video"; OUT=assets/video
+SRC="$ROOT/video"; OUT=assets/video
 S720="scale='if(gt(iw,ih),-2,720)':'if(gt(iw,ih),720,-2)'"
 LIST="sportsnote|運動筆記showreels.mp4|1.6M
 on-event|On_活動影片.mp4|1.6M

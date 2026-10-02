@@ -1,7 +1,11 @@
 # 節奏混剪 v2：純影片、跟著音樂節拍剪、每刀帶轉場
+import shutil as _sh, os as _os
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+ROOT = _os.path.dirname(_HERE).replace("\\", "/")          # 作品集網站 資料夾（自動偵測）
 import json, subprocess, os
-FF=r"C:/Users/User/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-9.0.1-full_build/bin/ffmpeg.exe"
-SRC="D:/作品集網站/video/"; W="montage-work/v2/"; os.makedirs(W,exist_ok=True)
+os.chdir(_HERE)
+FF=_os.environ.get("FFMPEG") or _sh.which("ffmpeg") or "ffmpeg"
+SRC=ROOT+"/video/"; W="montage-work/v2/"; os.makedirs(W,exist_ok=True)
 AN="3D Animation＆ Motion Design  Showreel 2022-2023 ｜Alan Pan 潘睿能.mp4"; SN="運動筆記showreels.mp4"; ON="On_活動影片.mp4"
 BK="破局者年會2026 - 複製.mp4"; LD="林小安談紀錄片.mp4"
 TSMC=open("tsmc-bright.txt",encoding="utf-8").read().strip()
